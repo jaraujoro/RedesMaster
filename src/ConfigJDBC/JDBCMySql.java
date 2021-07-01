@@ -2,7 +2,6 @@ package ConfigJDBC;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 /**
- *
  * @author Araujo
  */
 public class JDBCMySql extends GestorJDBC {

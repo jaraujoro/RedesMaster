@@ -72,7 +72,7 @@ public class FormQuestions extends javax.swing.JFrame {
         PanelBotonesIndice = new javax.swing.JPanel();
         btnIndice = new javax.swing.JButton();
         btnAleatorio = new javax.swing.JButton();
-        btnIndice2 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         FondoTotal = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -273,7 +273,7 @@ public class FormQuestions extends javax.swing.JFrame {
 
         btnAleatorio.setText("TEST ALEATORIO");
 
-        btnIndice2.setText("SALIR");
+        btnSalir.setText("SALIR");
 
         javax.swing.GroupLayout PanelBotonesIndiceLayout = new javax.swing.GroupLayout(PanelBotonesIndice);
         PanelBotonesIndice.setLayout(PanelBotonesIndiceLayout);
@@ -282,7 +282,7 @@ public class FormQuestions extends javax.swing.JFrame {
             .addGroup(PanelBotonesIndiceLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(PanelBotonesIndiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnIndice2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAleatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIndice, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
@@ -295,7 +295,7 @@ public class FormQuestions extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnAleatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnIndice2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -387,10 +387,10 @@ public class FormQuestions extends javax.swing.JFrame {
     public static javax.swing.JButton btnCap8;
     public static javax.swing.JButton btnCap9;
     public static javax.swing.JButton btnIndice;
-    public static javax.swing.JButton btnIndice2;
     public static javax.swing.JButton btnNext;
     public static javax.swing.JButton btnNextPregunta;
     public static javax.swing.JButton btnRegresar;
+    public static javax.swing.JButton btnSalir;
     public javax.swing.JLabel imagen1;
     public javax.swing.JLabel imagen2;
     private javax.swing.JLabel jLabel1;

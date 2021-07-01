@@ -693,7 +693,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnIndice2" min="-2" pref="160" max="-2" attributes="0"/>
+                      <Component id="btnSalir" min="-2" pref="160" max="-2" attributes="0"/>
                       <Component id="btnAleatorio" min="-2" pref="160" max="-2" attributes="0"/>
                       <Component id="btnIndice" min="-2" pref="160" max="-2" attributes="0"/>
                   </Group>
@@ -709,7 +709,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnAleatorio" min="-2" pref="37" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnIndice2" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="btnSalir" min="-2" pref="37" max="-2" attributes="0"/>
                   <EmptySpace pref="28" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -732,7 +732,7 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="btnIndice2">
+        <Component class="javax.swing.JButton" name="btnSalir">
           <Properties>
             <Property name="text" type="java.lang.String" value="SALIR"/>
           </Properties>

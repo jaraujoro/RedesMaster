@@ -63,6 +63,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
      FormQuestions.respuesta4.addMouseListener(this);
      FormQuestions.btnNextPregunta.addActionListener(this);
      FormQuestions.btnAleatorio.addActionListener(this);
+     FormQuestions.btnSalir.addActionListener(this);
      question.PanelMenu.setVisible(false);
      question.PanelPreguntas.setVisible(false);
      question.PanelBotonesIndice.setOpaque(false);
@@ -91,7 +92,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
  }
  public void incorrecta(){
      mala++;
-     question.Incorrecta.setText("ACIERTOS: "+mala+"");
+     question.Incorrecta.setText("DESACIERTOS: "+mala+"");
      FormQuestions.txtRespuesta.setText("<html><font color='red'size=5>RESPUESTA INCORRECTA");
      question.PanelOpciones.setVisible(false);
      notaEstudiante();
@@ -175,11 +176,13 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             }catch(Exception problem){
             message("Problem"+problem);   
             }
- }
- 
+ }                                                                                  
     @Override
     public void actionPerformed(ActionEvent e) {
         //event's buttom's
+        if(FormQuestions.btnSalir==e.getSource()){
+            System.exit(0);
+        }
         if(FormQuestions.btnNextPregunta==e.getSource()){
          //question.PanelOpciones.setVisible(false);
            question.PanelRecuerda.setVisible(true);
@@ -511,16 +514,16 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         }
         if(FormQuestions.btnAceptarPizarra==e.getSource()){
             if(pregunta==10){
+                 int rescorrect =buena;
+                   int resincorrect=mala;
                 //insertar historial usuario;
                 if(insertarHistorial>0){
                    String usuario=FormLogin.txtusername.getText();
                    String capitule = capitulo;
-                   int rescorrect = buena;
-                   int resincorrect=mala;
                    int nota= buena*2;
                    fecha = fecha = Date.valueOf(LocalDate.now()); 
                     try {
-                        historial = new Historial(usuario, capitule, resincorrect, resincorrect, nota, fecha);
+                        historial = new Historial(usuario, capitule, rescorrect, resincorrect, nota, fecha);
                         int x = historial.sendNote();
                         if(x>0){
                             insertarHistorial=0;
@@ -542,10 +545,12 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             }
             pregunta=pregunta+1;
             mostrarDatos(capitulo);
+            FormQuestions.RadioButtomGroup.clearSelection();
             question.RadioButtomGroup.clearSelection();
             question.btnNext.setEnabled(false);
             question.PanelRecuerda.setVisible(false);
             FormQuestions.PanelOpciones.setVisible(true);
+            question.sumNota.setVisible(false);
         }
         if(FormQuestions.btnCap1==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
