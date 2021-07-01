@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/view/FormQuestions.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/ConfigJDBC/JDBCMySql.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/model/Respuesta.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/DataAccessObject/HistoryUserDAO.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/view/FormRegister.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/DataAccessObject/QuestionDAO.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/DataAccessObject/UserDAO.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/model/Historial.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/main/ProyectoRedesMVC.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/model/Capitulo.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/model/User.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/view/FormLogin.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/controler/controlerUser.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/ConfigJDBC/GestorJDBC.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/model/Pregunta.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/ProyectoRedesMVC/src/controler/controlerQuestion.java</file>
+        </group>
+    </open-files>
+</project-private>
