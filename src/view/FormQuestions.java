@@ -45,6 +45,10 @@ public class FormQuestions extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         PanelDeslice = new javax.swing.JPanel();
         labelUser = new javax.swing.JLabel();
+        PanelHistorial = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jLabel8 = new javax.swing.JLabel();
+        btnCerrarHistorial = new javax.swing.JButton();
         PanelPreguntas = new javax.swing.JPanel();
         tituloCap = new javax.swing.JLabel();
         SubPanel = new javax.swing.JTabbedPane();
@@ -73,6 +77,7 @@ public class FormQuestions extends javax.swing.JFrame {
         btnIndice = new javax.swing.JButton();
         btnAleatorio = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnHistorial = new javax.swing.JButton();
         FondoTotal = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -175,6 +180,61 @@ public class FormQuestions extends javax.swing.JFrame {
 
         getContentPane().add(PanelDeslice, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 50));
 
+        tablaUserHistorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tablaUserHistorial.setEnabled(false);
+        jScrollPane1.setViewportView(tablaUserHistorial);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("HISTORIAL: PUNTAJE Y CAPÍTULO");
+
+        btnCerrarHistorial.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnCerrarHistorial.setText("CERRAR");
+
+        javax.swing.GroupLayout PanelHistorialLayout = new javax.swing.GroupLayout(PanelHistorial);
+        PanelHistorial.setLayout(PanelHistorialLayout);
+        PanelHistorialLayout.setHorizontalGroup(
+            PanelHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelHistorialLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(PanelHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelHistorialLayout.createSequentialGroup()
+                        .addComponent(btnCerrarHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+        PanelHistorialLayout.setVerticalGroup(
+            PanelHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelHistorialLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(PanelHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCerrarHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(PanelHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 520, 460));
+
         PanelPreguntas.setBackground(new java.awt.Color(204, 204, 204));
         PanelPreguntas.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         PanelPreguntas.setMinimumSize(new java.awt.Dimension(440, 460));
@@ -275,6 +335,8 @@ public class FormQuestions extends javax.swing.JFrame {
 
         btnSalir.setText("SALIR");
 
+        btnHistorial.setText("HISTORIAL");
+
         javax.swing.GroupLayout PanelBotonesIndiceLayout = new javax.swing.GroupLayout(PanelBotonesIndice);
         PanelBotonesIndice.setLayout(PanelBotonesIndiceLayout);
         PanelBotonesIndiceLayout.setHorizontalGroup(
@@ -282,6 +344,7 @@ public class FormQuestions extends javax.swing.JFrame {
             .addGroup(PanelBotonesIndiceLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(PanelBotonesIndiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAleatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIndice, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -296,10 +359,12 @@ public class FormQuestions extends javax.swing.JFrame {
                 .addComponent(btnAleatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(PanelBotonesIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 200, 220, 200));
+        getContentPane().add(PanelBotonesIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 220, 240));
 
         FondoTotal.setMinimumSize(new java.awt.Dimension(1000, 625));
         FondoTotal.setPreferredSize(new java.awt.Dimension(1000, 620));
@@ -365,6 +430,7 @@ public class FormQuestions extends javax.swing.JFrame {
     public javax.swing.JPanel IniciarPregunta;
     public javax.swing.JPanel PanelBotonesIndice;
     public javax.swing.JPanel PanelDeslice;
+    public javax.swing.JPanel PanelHistorial;
     public javax.swing.JPanel PanelMenu;
     public static javax.swing.JPanel PanelOpciones;
     public javax.swing.JPanel PanelPreguntas;
@@ -386,6 +452,8 @@ public class FormQuestions extends javax.swing.JFrame {
     public static javax.swing.JButton btnCap7;
     public static javax.swing.JButton btnCap8;
     public static javax.swing.JButton btnCap9;
+    public static javax.swing.JButton btnCerrarHistorial;
+    public static javax.swing.JButton btnHistorial;
     public static javax.swing.JButton btnIndice;
     public static javax.swing.JButton btnNext;
     public static javax.swing.JButton btnNextPregunta;
@@ -400,6 +468,8 @@ public class FormQuestions extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JLabel labelUser;
     public static javax.swing.JLabel numeroPregunta;
     public static javax.swing.JRadioButton respuesta1;
@@ -407,6 +477,7 @@ public class FormQuestions extends javax.swing.JFrame {
     public static javax.swing.JRadioButton respuesta3;
     public static javax.swing.JRadioButton respuesta4;
     public static javax.swing.JLabel sumNota;
+    public final javax.swing.JTable tablaUserHistorial = new javax.swing.JTable();
     public static javax.swing.JLabel tituloCap;
     public static javax.swing.JLabel txtRespuesta;
     // End of variables declaration//GEN-END:variables

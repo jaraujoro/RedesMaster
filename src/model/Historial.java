@@ -6,6 +6,7 @@ import DataAccessObject.HistoryUserDAO;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Historial {
    private String nombreUsuario;
@@ -14,10 +15,19 @@ public class Historial {
    private int respuesta_incorrecta;
    private int nota;
    private Date fecha;
+   /********************************/
    private GestorJDBC gestorJDBC= new JDBCMySql();
    private HistoryUserDAO historial= new HistoryUserDAO(gestorJDBC);
    public Historial() {
    }
+
+    public Historial(String capitulo, int respuesta_correcta, int respuesta_incorrecta, int nota, Date fecha) {
+        this.capitulo = capitulo;
+        this.respuesta_correcta = respuesta_correcta;
+        this.respuesta_incorrecta = respuesta_incorrecta;
+        this.nota = nota;
+        this.fecha = fecha;
+    }
 
     public Historial(String nombreUsuario, String capitulo, int respuesta_correcta, int respuesta_incorrecta, int nota, Date fecha) {
         this.nombreUsuario = nombreUsuario;
@@ -26,6 +36,11 @@ public class Historial {
         this.respuesta_incorrecta = respuesta_incorrecta;
         this.nota = nota;
         this.fecha = fecha;
+    }
+    
+
+    public Historial(String capitulo) {
+        this.capitulo = capitulo;
     }
 
     public String getNombreUsuario() {
@@ -105,4 +120,17 @@ public class Historial {
         throw e;
         }
     }
+    public List<Historial> listHistorial(String nick)throws Exception{
+        gestorJDBC.abrirConexion();
+        List his=historial.mostrarHistorial(nick);
+        gestorJDBC.cerrarConexion();
+        return his;
+    }
+    /*
+    public Historial obtenerHistorial(String nick) throws Exception{
+        gestorJDBC.abrirConexion();
+        Historial his =historial.ObtenerHistorial(nick);
+        gestorJDBC.cerrarConexion();
+        return his;
+    }*/
 }

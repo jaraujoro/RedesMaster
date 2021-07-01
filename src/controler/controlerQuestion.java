@@ -4,14 +4,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import model.Capitulo;
 import model.Historial;
 import model.Pregunta;
 import model.Respuesta;
 import model.User;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 import view.FormLogin;
 import view.FormQuestions;
 
@@ -38,6 +43,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
  int notaEstudiante=0;
  int insertarHistorial=0;
  Date fecha;
+ //String userhistorial;
  public controlerQuestion(FormQuestions question,FormLogin login) throws Exception{
      this.question=question;
      this.login=login;
@@ -61,9 +67,11 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
      FormQuestions.respuesta2.addMouseListener(this);
      FormQuestions.respuesta3.addMouseListener(this);
      FormQuestions.respuesta4.addMouseListener(this);
+     FormQuestions.btnHistorial.addActionListener(this);
      FormQuestions.btnNextPregunta.addActionListener(this);
      FormQuestions.btnAleatorio.addActionListener(this);
      FormQuestions.btnSalir.addActionListener(this);
+     FormQuestions.btnCerrarHistorial.addActionListener(this);
      question.PanelMenu.setVisible(false);
      question.PanelPreguntas.setVisible(false);
      question.PanelBotonesIndice.setOpaque(false);
@@ -77,11 +85,42 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
      question.respuesta3.setOpaque(false);
      question.respuesta4.setOpaque(false);
      question.sumNota.setVisible(false);
+     question.PanelHistorial.setVisible(false);
      question.labelUser.setText("Usuario: "+FormLogin.txtusername.getText());
  }
  /*Metodos para la clase*/
  public void message(String mensaje){
      JOptionPane.showMessageDialog(null,mensaje);
+ }
+ public void listaHistorial(){
+      //DefaultTableCellRenderer center = new DefaultTableCellHeaderRenderer();
+      //center.setHorizontalAlignment(SwingConstants.CENTER);
+      DefaultTableModel userHistory = new DefaultTableModel();
+      userHistory.addColumn("Capitulo");
+      userHistory.addColumn("Nº Aciertos");
+      userHistory.addColumn("Nº Desaciertos");
+      userHistory.addColumn("Nota");
+      userHistory.addColumn("Fecha");
+      question.tablaUserHistorial.setModel(userHistory);
+      String []datos = new String[5];
+      String userHistorial=FormLogin.txtusername.getText();
+            historial = new Historial();
+            try {
+                if(historial!=null){
+                for (int j = 0; j < historial.listHistorial(userHistorial).size(); j++) {
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");    
+                    datos[0]=historial.listHistorial(userHistorial).get(j).getCapitulo();
+                    datos[1]=String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_correcta());
+                    datos[2]=String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_incorrecta());
+                    datos[3]=String.valueOf(historial.listHistorial(userHistorial).get(j).getNota());
+                    datos[4]=formatoFecha.format(historial.listHistorial(userHistorial).get(j).getFecha());
+                    userHistory.addRow(datos);  
+                }
+            }
+            question.tablaUserHistorial.setModel(userHistory);
+            }catch (Exception c) {
+            message("error"+c);
+            }  
  }
  public void correcta(){
      buena++;
@@ -181,7 +220,19 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //event's buttom's
         if(FormQuestions.btnSalir==e.getSource()){
+            
             System.exit(0);
+        }
+        if(FormQuestions.btnHistorial==e.getSource()){
+            question.PanelHistorial.setVisible(true);
+            question.PanelBotonesIndice.setVisible(false);
+            //userhistorial = question.labelUser.getText();
+            listaHistorial();
+            
+        }
+        if(FormQuestions.btnCerrarHistorial==e.getSource()){
+            question.PanelHistorial.setVisible(false);
+            question.PanelBotonesIndice.setVisible(true);
         }
         if(FormQuestions.btnNextPregunta==e.getSource()){
          //question.PanelOpciones.setVisible(false);
