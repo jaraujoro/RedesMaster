@@ -37,7 +37,7 @@ public abstract class GestorJDBC {
         resultado = sentencia.executeQuery(sql);
         return resultado;
     }
-    public Connection getConexion() {
+    public Connection getConexion(){
         return conexion;
     }
 }

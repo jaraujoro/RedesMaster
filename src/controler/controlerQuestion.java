@@ -87,91 +87,102 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
      question.sumNota.setVisible(false);
      question.PanelHistorial.setVisible(false);
      question.labelUser.setText("Usuario: "+FormLogin.txtusername.getText());
+     
  }
  /*Metodos para la clase*/
- public void message(String mensaje){
-     JOptionPane.showMessageDialog(null,mensaje);
- }
- public void listaHistorial(){
-      //DefaultTableCellRenderer center = new DefaultTableCellHeaderRenderer();
-      //center.setHorizontalAlignment(SwingConstants.CENTER);
-      DefaultTableModel userHistory = new DefaultTableModel();
-      userHistory.addColumn("Capitulo");
-      userHistory.addColumn("Nº Aciertos");
-      userHistory.addColumn("Nº Desaciertos");
-      userHistory.addColumn("Nota");
-      userHistory.addColumn("Fecha");
-      question.tablaUserHistorial.setModel(userHistory);
-      String []datos = new String[5];
-      String userHistorial=FormLogin.txtusername.getText();
-            historial = new Historial();
-            try {
-                if(historial!=null){
+    public void message(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+    public void listaHistorial() {
+        //DefaultTableCellRenderer center = new DefaultTableCellHeaderRenderer();
+        //center.setHorizontalAlignment(SwingConstants.CENTER);
+        DefaultTableModel userHistory = new DefaultTableModel();
+        userHistory.addColumn("Capitulo");
+        userHistory.addColumn("Nº Aciertos");
+        userHistory.addColumn("Nº Desaciertos");
+        userHistory.addColumn("Nota");
+        userHistory.addColumn("Fecha");
+        question.tablaUserHistorial.setModel(userHistory);
+        String[] datos = new String[5];
+        String userHistorial = FormLogin.txtusername.getText();
+        historial = new Historial();
+        try {
+            if (historial != null) {
                 for (int j = 0; j < historial.listHistorial(userHistorial).size(); j++) {
-                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");    
-                    datos[0]=historial.listHistorial(userHistorial).get(j).getCapitulo();
-                    datos[1]=String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_correcta());
-                    datos[2]=String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_incorrecta());
-                    datos[3]=String.valueOf(historial.listHistorial(userHistorial).get(j).getNota());
-                    datos[4]=formatoFecha.format(historial.listHistorial(userHistorial).get(j).getFecha());
-                    userHistory.addRow(datos);  
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");                    
+                    datos[0] = historial.listHistorial(userHistorial).get(j).getCapitulo();
+                    datos[1] = String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_correcta());
+                    datos[2] = String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_incorrecta());
+                    datos[3] = String.valueOf(historial.listHistorial(userHistorial).get(j).getNota());
+                    datos[4] = formatoFecha.format(historial.listHistorial(userHistorial).get(j).getFecha());
+                    userHistory.addRow(datos);                    
                 }
             }
             question.tablaUserHistorial.setModel(userHistory);
-            }catch (Exception c) {
-            message("error"+c);
-            }  
- }
- public void correcta(){
-     buena++;
-     question.Correcta.setText("ACIERTOS: "+buena+"");
-     FormQuestions.txtRespuesta.setText("<html><font color='green'size=5>RESPUESTA CORRECTA");
-     question.PanelOpciones.setVisible(false);
-     notaEstudiante();
- }
- public void incorrecta(){
-     mala++;
-     question.Incorrecta.setText("DESACIERTOS: "+mala+"");
-     FormQuestions.txtRespuesta.setText("<html><font color='red'size=5>RESPUESTA INCORRECTA");
-     question.PanelOpciones.setVisible(false);
-     notaEstudiante();
- }
- public void imagenPregunta(){
-     if(capitulo=="CAP4"&(counter==15|counter==16)){question.imagen1.setVisible(true);}else{question.imagen1.setVisible(false);}
-     if(capitulo=="CAP4"&counter==20){question.imagen2.setVisible(true);}else{question.imagen2.setVisible(false);}
- }
- public void notaEstudiante(){
-   if(insertarHistorial>0){
-    if(pregunta==10){
-        question.sumNota.setVisible(true);
-        notaEstudiante=buena*2;
-        if(notaEstudiante<10){
-            question.sumNota.setText("<html><font color='red'size=5>Su nota es: "+notaEstudiante);
-        }else if(notaEstudiante>10){
-            question.sumNota.setText("<html><font color='green'size=5>Su nota es: "+notaEstudiante);   
+        } catch (Exception c) {
+            message("error" + c);
+        }        
+    }
+    public void correcta() {
+        buena++;
+        question.Correcta.setText("ACIERTOS: " + buena + "");
+        FormQuestions.txtRespuesta.setText("<html><font color='green'size=5>RESPUESTA CORRECTA");
+        question.PanelOpciones.setVisible(false);
+        notaEstudiante();
+    }
+
+    public void incorrecta() {
+        mala++;
+        question.Incorrecta.setText("DESACIERTOS: " + mala + "");
+        FormQuestions.txtRespuesta.setText("<html><font color='red'size=5>RESPUESTA INCORRECTA");
+        question.PanelOpciones.setVisible(false);
+        notaEstudiante();
+    }
+    public void imagenPregunta() {
+        if (capitulo == "CAP4" & (counter == 15 | counter == 16)) {
+            question.imagen1.setVisible(true);
+        } else {
+            question.imagen1.setVisible(false);
+        }
+        if (capitulo == "CAP4" & counter == 20) {
+            question.imagen2.setVisible(true);
+        } else {
+            question.imagen2.setVisible(false);
         }
     }
-   } 
- }
- public void  regenerarArray(){
-  if (arreglo[i] == 0) { 
+
+    public void notaEstudiante() {
+        if (insertarHistorial > 0) {
+            if (pregunta == 10) {
+                question.sumNota.setVisible(true);
+                notaEstudiante = buena * 2;
+                if (notaEstudiante < 10) {
+                    question.sumNota.setText("<html><font color='red'size=5>Su nota es: " + notaEstudiante);
+                } else if (notaEstudiante > 10) {
+                    question.sumNota.setText("<html><font color='green'size=5>Su nota es: " + notaEstudiante);                    
+                }
+            }
+        }        
+    }
+    public void regenerarArray() {
+        if (arreglo[i] == 0) {            
             arreglo[i] = (int) (Math.random() * max + 1);
             for (int i = 1; i < max; i++) {
-                arreglo[i] = (int) (Math.random() * max + 1); 
+                arreglo[i] = (int) (Math.random() * max + 1);                
                 for (int j = 0; j < i; j++) {
                     if (arreglo[i] == arreglo[j]) {
                         i--;
                     }
                 }
-            } 
+            }            
         }
- }
- public void capituloAleatorio(){
-     pregunta=1;
-     insertarHistorial=1;
-     int capAlt = ((int) (Math.random()*(11-1))+1);
-     numeroCapitulo=capAlt;
-     if(numeroCapitulo==1){max=19;}
+    }
+    public void capituloAleatorio(){
+        pregunta=1;
+        insertarHistorial=1;
+        int capAlt = ((int) (Math.random()*(11-1))+1);
+        numeroCapitulo=capAlt;
+       if(numeroCapitulo==1){max=19;}
        if(numeroCapitulo==2){max=18;}
        if(numeroCapitulo==3){max=24;}
        if(numeroCapitulo==4){max=20;}
@@ -186,36 +197,50 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             arreglo[n] = 0;
         }       
        capitulo="CAP"+numeroCapitulo;
- }
- public void mostrarDatos(String capi){
-           regenerarArray();
-           pos++;
-           counter=(arreglo[pos]);
-           cap = new Capitulo();
-           res = new Respuesta();
-           pre = new Pregunta();
-           try {
-           String datecapi=capi;    
-           res=  res.Data(datecapi,counter);
-           if(res!=null){
-                cap=res.getPregunta().getCapitulo();
-                FormQuestions.numeroPregunta.setText("Pregunta: "+pregunta);
-                FormQuestions.tituloCap.setText(res.getPregunta().getCapitulo().getCapitulo());
-                FormQuestions.Pregunta.setText(res.getPregunta().getPregunta());
-                FormQuestions.respuesta1.setText(res.getRespuesta1());
-                FormQuestions.respuesta2.setText(res.getRespuesta2());
-                FormQuestions.respuesta3.setText(res.getRespuesta3());
-                FormQuestions.respuesta4.setText(res.getRespuesta4());
-                FormQuestions.Recuerda.setText("<html><p ALIGN=justify>"+"<b><u>Recuerda que</u>: </b>"+res.getMensaje()+"</p><html>");
-                question.Correcta.setText("ACIERTOS: "+buena+"");
-                question.Incorrecta.setText("DESACIERTOS: "+mala+"");
+    }
+    public void desactivarCapitulos(){
+        FormQuestions.btnCap1.setEnabled(false);
+        FormQuestions.btnCap2.setEnabled(false);
+        FormQuestions.btnCap3.setEnabled(false);
+        FormQuestions.btnCap4.setEnabled(false);
+        FormQuestions.btnCap5.setEnabled(false);
+        FormQuestions.btnCap6.setEnabled(false);
+        FormQuestions.btnCap7.setEnabled(false);
+        FormQuestions.btnCap8.setEnabled(false);
+        FormQuestions.btnCap9.setEnabled(false);
+        FormQuestions.btnCap10.setEnabled(false);
+        question.btnNext.setEnabled(false);
+        question.btnRegresar.setEnabled(false);
+    }
+    public void mostrarDatos(String capi) {
+        regenerarArray();
+        pos++;
+        counter = (arreglo[pos]);
+        cap = new Capitulo();
+        res = new Respuesta();
+        pre = new Pregunta();
+        try {
+            String datecapi = capi;
+            res = res.Data(datecapi, counter);
+            if (res != null) {
+                cap = res.getPregunta().getCapitulo();
+                FormQuestions.numeroPregunta.setText("Pregunta: " + pregunta);
+                FormQuestions.tituloCap.setText("<html>" + res.getPregunta().getCapitulo().getCapitulo() + "<html>");
+                FormQuestions.Pregunta.setText("<html>" + res.getPregunta().getPregunta().toUpperCase()+ "<html>");
+                FormQuestions.respuesta1.setText("<html>"+res.getRespuesta1()+"<html>");
+                FormQuestions.respuesta2.setText("<html>"+res.getRespuesta2()+"<html>");
+                FormQuestions.respuesta3.setText("<html>"+res.getRespuesta3()+"<html>");
+                FormQuestions.respuesta4.setText("<html>"+res.getRespuesta4()+"<html>");
+                FormQuestions.Recuerda.setText("<html><p ALIGN=justify>" + "<b><u>Recuerda que</u>: </b>" + res.getMensaje() + "</p><html>");
+                question.Correcta.setText("ACIERTOS: " + buena + "");
+                question.Incorrecta.setText("DESACIERTOS: " + mala + "");
                 imagenPregunta();
                 //s
             }
-            }catch(Exception problem){
-            message("Problem"+problem);   
-            }
- }                                                                                  
+        } catch (Exception problem) {
+            message("Problem" + problem);
+        }
+    }                                                                              
     @Override
     public void actionPerformed(ActionEvent e) {
         //event's buttom's
@@ -226,6 +251,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             question.PanelHistorial.setVisible(true);
             question.PanelBotonesIndice.setVisible(false);
             //userhistorial = question.labelUser.getText();
+            question.PanelMenu.setVisible(false);
+              x = 0;
+              a = 220;      
             listaHistorial();   
         }
         if(FormQuestions.btnCerrarHistorial==e.getSource()){
@@ -233,6 +261,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             question.PanelBotonesIndice.setVisible(true);
         }
         if(FormQuestions.btnNextPregunta==e.getSource()){
+           question.btnNextPregunta.setEnabled(false);
          //question.PanelOpciones.setVisible(false);
            question.PanelRecuerda.setVisible(true);
            if("CAP1".equals(capitulo)){
@@ -590,20 +619,33 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
                 pregunta=0;
                 buena=0;
                 mala=0;
+                FormQuestions.btnCap1.setEnabled(true);
+                FormQuestions.btnCap2.setEnabled(true);
+                FormQuestions.btnCap3.setEnabled(true);
+                FormQuestions.btnCap4.setEnabled(true);
+                FormQuestions.btnCap5.setEnabled(true);
+                FormQuestions.btnCap6.setEnabled(true);
+                FormQuestions.btnCap7.setEnabled(true);
+                FormQuestions.btnCap8.setEnabled(true);
+                FormQuestions.btnCap9.setEnabled(true);
+                FormQuestions.btnCap10.setEnabled(true);
+                question.btnNext.setEnabled(true);
+                question.btnRegresar.setEnabled(true);
                 }
             }
             pregunta=pregunta+1;
             mostrarDatos(capitulo);
             FormQuestions.RadioButtomGroup.clearSelection();
             question.RadioButtomGroup.clearSelection();
-            question.btnNext.setEnabled(false);
             question.PanelRecuerda.setVisible(false);
             FormQuestions.PanelOpciones.setVisible(true);
             question.sumNota.setVisible(false);
+            //question.btnNextPregunta.setEnabled(true);
         }
         if(FormQuestions.btnCap1==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=19;
            pos=0;
@@ -616,6 +658,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap2==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=18;
            pos=0;
@@ -628,6 +671,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap3==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=24;
            pos=0;
@@ -640,6 +684,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap4==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=20;
            pos=0;
@@ -652,6 +697,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap5==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=36;
            pos=0;
@@ -664,6 +710,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap6==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=49;
            pos=0;
@@ -676,6 +723,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap7==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=49;
            pos=0;
@@ -688,6 +736,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap8==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=34;
            pos=0;
@@ -700,6 +749,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap9==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=24;
            pos=0;
@@ -712,6 +762,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         if(FormQuestions.btnCap10==e.getSource()){
            question.PanelBotonesIndice.setVisible(false);
            question.PanelPreguntas.setVisible(true);
+           desactivarCapitulos();
            pregunta=1;
            max=22;
            pos=0;
@@ -731,6 +782,10 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.btnCap6.setVisible(false);
            question.btnCap7.setVisible(false);
            question.btnNext.setVisible(false);
+           question.btnRegresar.setVisible(true);
+           question.btnCap8.setVisible(true);
+           question.btnCap9.setVisible(true);
+           question.btnCap10.setVisible(true);
         }
         if(FormQuestions.btnRegresar==e.getSource()){
            question.btnCap1.setVisible(true);
@@ -741,6 +796,10 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.btnCap6.setVisible(true);
            question.btnCap7.setVisible(true);
            question.btnNext.setVisible(true);   
+           question.btnCap8.setVisible(false);
+           question.btnCap9.setVisible(false);
+           question.btnCap10.setVisible(false);
+           question.btnRegresar.setVisible(false);
         }
         //Panel Deslice;
         if(FormQuestions.btnAleatorio == e.getSource()){
@@ -748,14 +807,16 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            question.Correcta.setVisible(true);
            question.Incorrecta.setVisible(true);
+           question.PanelMenu.setVisible(false);
            capituloAleatorio();
            mostrarDatos(capitulo);
-           question.PanelMenu.setVisible(false);
            x=0;
            a=220;
         }
         if(FormQuestions.btnIndice == e.getSource()){
-          question.PanelMenu.setVisible(true);  
+            question.PanelMenu.setVisible(true);
+            question.Correcta.setVisible(false);
+            question.Incorrecta.setVisible(false);
           if (x == 220) {  
             question.PanelMenu.setSize(220, 570);
             Thread th = new Thread() {
@@ -792,14 +853,14 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             th.start();
             x = 220;
                         }
-        }
-        
+        }      
     }
     @Override
     //events label/radiobuttoms
     public void mouseClicked(MouseEvent e) {
         //Activacion del boton nextPregunta;
         if (FormQuestions.respuesta1 == e.getSource() || FormQuestions.respuesta2 == e.getSource() || FormQuestions.respuesta3 == e.getSource() || FormQuestions.respuesta4 == e.getSource()){
+            FormQuestions.btnNextPregunta.setEnabled(true);
             FormQuestions.btnNextPregunta.setEnabled(true);
         } 
     }

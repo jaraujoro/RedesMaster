@@ -5,6 +5,10 @@
  */
 package view;
 
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Spider
@@ -16,8 +20,11 @@ public class FormQuestions extends javax.swing.JFrame {
      */
     public FormQuestions() {
         initComponents();
+        this.setTitle("Menú Principal");
+        this.getContentPane().setBackground(Color.WHITE);
+        Image ico = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/Log.png"));
+        this.setIconImage(ico);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,8 +56,9 @@ public class FormQuestions extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jLabel8 = new javax.swing.JLabel();
         btnCerrarHistorial = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         PanelPreguntas = new javax.swing.JPanel();
-        tituloCap = new javax.swing.JLabel();
         SubPanel = new javax.swing.JTabbedPane();
         IniciarPregunta = new javax.swing.JPanel();
         numeroPregunta = new javax.swing.JLabel();
@@ -73,6 +81,8 @@ public class FormQuestions extends javax.swing.JFrame {
         Incorrecta = new javax.swing.JLabel();
         Correcta = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        tituloCap = new javax.swing.JLabel();
         PanelBotonesIndice = new javax.swing.JPanel();
         btnIndice = new javax.swing.JButton();
         btnAleatorio = new javax.swing.JButton();
@@ -88,6 +98,10 @@ public class FormQuestions extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        PanelMenu.setBackground(new java.awt.Color(184, 207, 229));
+        PanelMenu.setMaximumSize(new java.awt.Dimension(220, 570));
+        PanelMenu.setMinimumSize(new java.awt.Dimension(220, 570));
+        PanelMenu.setPreferredSize(new java.awt.Dimension(220, 570));
         PanelMenu.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -100,58 +114,112 @@ public class FormQuestions extends javax.swing.JFrame {
         PanelMenu.add(jLabel2);
         jLabel2.setBounds(50, 40, 130, 110);
 
+        btnNext.setBackground(new java.awt.Color(255, 255, 255));
+        btnNext.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnNext.setText("SIGUIENTE CAPÍTULO");
+        btnNext.setBorder(null);
         btnNext.setBorderPainted(false);
+        btnNext.setFocusPainted(false);
+        btnNext.setRequestFocusEnabled(false);
         PanelMenu.add(btnNext);
         btnNext.setBounds(20, 520, 180, 30);
 
+        btnCap1.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap1.setText("CAPÍTULO 1");
+        btnCap1.setBorder(null);
         btnCap1.setBorderPainted(false);
+        btnCap1.setFocusPainted(false);
         PanelMenu.add(btnCap1);
         btnCap1.setBounds(10, 170, 200, 40);
 
+        btnCap2.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap2.setText("CAPÍTULO 2");
+        btnCap2.setBorder(null);
         btnCap2.setBorderPainted(false);
+        btnCap2.setFocusPainted(false);
+        btnCap2.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap2);
         btnCap2.setBounds(10, 220, 200, 40);
 
+        btnCap3.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap3.setText("CAPÍTULO 3");
+        btnCap3.setBorder(null);
         btnCap3.setBorderPainted(false);
+        btnCap3.setFocusPainted(false);
+        btnCap3.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap3);
         btnCap3.setBounds(10, 270, 200, 40);
 
+        btnCap4.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap4.setText("CAPÍTULO 4");
+        btnCap4.setBorder(null);
         btnCap4.setBorderPainted(false);
+        btnCap4.setFocusPainted(false);
+        btnCap4.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap4);
         btnCap4.setBounds(10, 320, 200, 40);
 
+        btnCap5.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap5.setText("CAPÍTULO 5");
+        btnCap5.setBorder(null);
         btnCap5.setBorderPainted(false);
+        btnCap5.setFocusPainted(false);
+        btnCap5.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap5);
         btnCap5.setBounds(10, 370, 200, 40);
 
+        btnCap6.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap6.setText("CAPÍTULO 6");
+        btnCap6.setBorder(null);
         btnCap6.setBorderPainted(false);
+        btnCap6.setFocusPainted(false);
+        btnCap6.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap6);
         btnCap6.setBounds(10, 420, 200, 40);
 
+        btnCap7.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap7.setText("CAPÍTULO 7");
+        btnCap7.setBorder(null);
         btnCap7.setBorderPainted(false);
+        btnCap7.setFocusPainted(false);
+        btnCap7.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap7);
         btnCap7.setBounds(10, 470, 200, 40);
 
+        btnCap8.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap8.setText("CAPÍTULO 8");
+        btnCap8.setBorder(null);
         btnCap8.setBorderPainted(false);
+        btnCap8.setFocusPainted(false);
+        btnCap8.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap8);
         btnCap8.setBounds(10, 170, 200, 40);
 
+        btnCap9.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap9.setText("CAPÍTULO 9");
+        btnCap9.setBorder(null);
         btnCap9.setBorderPainted(false);
+        btnCap9.setFocusPainted(false);
+        btnCap9.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap9);
         btnCap9.setBounds(10, 220, 200, 40);
 
+        btnCap10.setBackground(new java.awt.Color(255, 255, 255));
+        btnCap10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCap10.setText("CAPÍTULO 10");
+        btnCap10.setBorder(null);
         btnCap10.setBorderPainted(false);
+        btnCap10.setFocusPainted(false);
+        btnCap10.setRequestFocusEnabled(false);
         PanelMenu.add(btnCap10);
         btnCap10.setBounds(10, 270, 200, 40);
 
@@ -162,10 +230,11 @@ public class FormQuestions extends javax.swing.JFrame {
 
         getContentPane().add(PanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 570));
 
-        PanelDeslice.setBackground(new java.awt.Color(255, 255, 255));
+        PanelDeslice.setBackground(new java.awt.Color(29, 29, 27));
         PanelDeslice.setPreferredSize(new java.awt.Dimension(220, 50));
 
-        labelUser.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelUser.setFont(new java.awt.Font("Dotum", 1, 14)); // NOI18N
+        labelUser.setForeground(new java.awt.Color(255, 255, 255));
         labelUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout PanelDesliceLayout = new javax.swing.GroupLayout(PanelDeslice);
@@ -180,6 +249,8 @@ public class FormQuestions extends javax.swing.JFrame {
         );
 
         getContentPane().add(PanelDeslice, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 50));
+
+        PanelHistorial.setLayout(null);
 
         tablaUserHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -198,59 +269,58 @@ public class FormQuestions extends javax.swing.JFrame {
 
             }
         ));
-        tablaUserHistorial.setEnabled(false);
+        tablaUserHistorial.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tablaUserHistorial.setEditingColumn(0);
+        tablaUserHistorial.setEditingRow(0);
+        tablaUserHistorial.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(tablaUserHistorial);
+        tablaUserHistorial.getAccessibleContext().setAccessibleName("");
+        tablaUserHistorial.getAccessibleContext().setAccessibleDescription("");
 
+        PanelHistorial.add(jScrollPane1);
+        jScrollPane1.setBounds(40, 50, 452, 151);
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("HISTORIAL: PUNTAJE Y CAPÍTULO");
+        jLabel8.setText("CURSO DE REDES Y COMUNICACIONES");
+        PanelHistorial.add(jLabel8);
+        jLabel8.setBounds(40, 210, 450, 38);
 
         btnCerrarHistorial.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnCerrarHistorial.setText("CERRAR");
+        btnCerrarHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close.png"))); // NOI18N
+        PanelHistorial.add(btnCerrarHistorial);
+        btnCerrarHistorial.setBounds(0, 0, 40, 40);
 
-        javax.swing.GroupLayout PanelHistorialLayout = new javax.swing.GroupLayout(PanelHistorial);
-        PanelHistorial.setLayout(PanelHistorialLayout);
-        PanelHistorialLayout.setHorizontalGroup(
-            PanelHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelHistorialLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(PanelHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelHistorialLayout.createSequentialGroup()
-                        .addComponent(btnCerrarHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
-        );
-        PanelHistorialLayout.setVerticalGroup(
-            PanelHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelHistorialLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(PanelHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCerrarHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
-        );
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("HISTORIAL USUARIO");
+        PanelHistorial.add(jLabel9);
+        jLabel9.setBounds(40, 0, 450, 38);
 
-        getContentPane().add(PanelHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 520, 460));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/notas.png"))); // NOI18N
+        PanelHistorial.add(jLabel10);
+        jLabel10.setBounds(350, 0, 50, 40);
 
-        PanelPreguntas.setBackground(new java.awt.Color(204, 204, 204));
+        getContentPane().add(PanelHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 540, 270));
+
+        PanelPreguntas.setBackground(new java.awt.Color(184, 207, 229));
         PanelPreguntas.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         PanelPreguntas.setMinimumSize(new java.awt.Dimension(440, 460));
         PanelPreguntas.setPreferredSize(new java.awt.Dimension(720, 530));
         PanelPreguntas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tituloCap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cap1.jpg"))); // NOI18N
-        PanelPreguntas.add(tituloCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 430, 59));
-
         SubPanel.setMinimumSize(new java.awt.Dimension(75, 28));
         SubPanel.setPreferredSize(new java.awt.Dimension(75, 28));
 
         IniciarPregunta.setLayout(null);
+
+        numeroPregunta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         IniciarPregunta.add(numeroPregunta);
         numeroPregunta.setBounds(10, 20, 110, 30);
+
+        Pregunta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         IniciarPregunta.add(Pregunta);
         Pregunta.setBounds(140, 0, 510, 70);
 
@@ -260,7 +330,7 @@ public class FormQuestions extends javax.swing.JFrame {
 
         Recuerda.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         Recuerda.setForeground(new java.awt.Color(255, 255, 255));
-        Recuerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ayuda.jpeg"))); // NOI18N
+        Recuerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/focus2.png"))); // NOI18N
         PanelRecuerda.add(Recuerda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 550, 120));
 
         txtRespuesta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -288,21 +358,37 @@ public class FormQuestions extends javax.swing.JFrame {
         PanelOpciones.add(imagen2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         RadioButtomGroup.add(respuesta1);
+        respuesta1.setBorder(null);
+        respuesta1.setFocusPainted(false);
+        respuesta1.setRequestFocusEnabled(false);
         PanelOpciones.add(respuesta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 36, 630, 40));
 
         RadioButtomGroup.add(respuesta2);
+        respuesta2.setBorder(null);
+        respuesta2.setFocusPainted(false);
+        respuesta2.setRequestFocusEnabled(false);
         PanelOpciones.add(respuesta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 86, 634, 37));
 
         RadioButtomGroup.add(respuesta3);
+        respuesta3.setBorder(null);
+        respuesta3.setFocusPainted(false);
+        respuesta3.setRequestFocusEnabled(false);
         PanelOpciones.add(respuesta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 132, 630, 40));
 
         RadioButtomGroup.add(respuesta4);
+        respuesta4.setBorder(null);
+        respuesta4.setFocusPainted(false);
+        respuesta4.setRequestFocusEnabled(false);
         PanelOpciones.add(respuesta4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 182, 630, 40));
 
         IniciarPregunta.add(PanelOpciones);
         PanelOpciones.setBounds(10, 80, 670, 260);
 
+        btnNextPregunta.setBackground(new java.awt.Color(0, 0, 0));
+        btnNextPregunta.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnNextPregunta.setForeground(new java.awt.Color(255, 255, 255));
         btnNextPregunta.setText("NEXT");
+        btnNextPregunta.setBorder(null);
         btnNextPregunta.setEnabled(false);
         btnNextPregunta.setPreferredSize(new java.awt.Dimension(81, 31));
         IniciarPregunta.add(btnNextPregunta);
@@ -318,25 +404,57 @@ public class FormQuestions extends javax.swing.JFrame {
 
         SubPanel.addTab("PREGUNTAS", IniciarPregunta);
 
-        PanelPreguntas.add(SubPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 700, 460));
+        PanelPreguntas.add(SubPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 700, 460));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exam.jpg"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/education.png"))); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(74, 75));
         jLabel3.setMinimumSize(new java.awt.Dimension(74, 75));
         jLabel3.setPreferredSize(new java.awt.Dimension(74, 75));
-        PanelPreguntas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 70, 70));
+        PanelPreguntas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 70, 70));
+
+        tituloCap.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        tituloCap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/book-bookmark-icon_34486.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tituloCap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tituloCap, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+        );
+
+        PanelPreguntas.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 580, 70));
 
         getContentPane().add(PanelPreguntas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 740, 560));
 
         PanelBotonesIndice.setPreferredSize(new java.awt.Dimension(0, 0));
 
         btnIndice.setText("ÍNDICE");
+        btnIndice.setBorder(null);
+        btnIndice.setBorderPainted(false);
+        btnIndice.setFocusPainted(false);
+        btnIndice.setRequestFocusEnabled(false);
 
         btnAleatorio.setText("TEST ALEATORIO");
+        btnAleatorio.setBorder(null);
+        btnAleatorio.setBorderPainted(false);
+        btnAleatorio.setFocusPainted(false);
+        btnAleatorio.setRequestFocusEnabled(false);
 
         btnSalir.setText("SALIR");
+        btnSalir.setBorder(null);
+        btnSalir.setBorderPainted(false);
+        btnSalir.setFocusPainted(false);
+        btnSalir.setRequestFocusEnabled(false);
 
         btnHistorial.setText("HISTORIAL");
+        btnHistorial.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnHistorial.setBorderPainted(false);
+        btnHistorial.setFocusPainted(false);
+        btnHistorial.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout PanelBotonesIndiceLayout = new javax.swing.GroupLayout(PanelBotonesIndice);
         PanelBotonesIndice.setLayout(PanelBotonesIndiceLayout);
@@ -362,7 +480,7 @@ public class FormQuestions extends javax.swing.JFrame {
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         getContentPane().add(PanelBotonesIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 220, 240));
@@ -371,7 +489,7 @@ public class FormQuestions extends javax.swing.JFrame {
         FondoTotal.setPreferredSize(new java.awt.Dimension(1000, 620));
         FondoTotal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/RedesLog.jpg"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/libro.jpg"))); // NOI18N
         FondoTotal.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 570));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -383,9 +501,9 @@ public class FormQuestions extends javax.swing.JFrame {
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redesImg.jpg"))); // NOI18N
         FondoTotal.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 620));
 
-        getContentPane().add(FondoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 625));
+        getContentPane().add(FondoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 620));
 
-        setSize(new java.awt.Dimension(1016, 663));
+        setSize(new java.awt.Dimension(1004, 653));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -463,6 +581,7 @@ public class FormQuestions extends javax.swing.JFrame {
     public javax.swing.JLabel imagen1;
     public javax.swing.JLabel imagen2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -470,6 +589,8 @@ public class FormQuestions extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JLabel labelUser;
     public static javax.swing.JLabel numeroPregunta;

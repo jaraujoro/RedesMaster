@@ -5,6 +5,9 @@
  */
 package view;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Spider
@@ -16,6 +19,9 @@ public class FormLogin extends javax.swing.JFrame {
      */
     public FormLogin() {
         initComponents();
+        this.setTitle("Iniciar Sesión");
+        Image ico = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/Log.png"));
+        this.setIconImage(ico);
     }
 
   
@@ -54,10 +60,20 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel2.setText("USERNAME");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
 
-        txtusername.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtusername.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtusername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtusernameKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 330, 40));
 
         txtpassword.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtpassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtpasswordKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 330, 40));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Avatar_Container.png"))); // NOI18N
@@ -85,11 +101,12 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel6.setText("REDES Y COMUNICACIONES 1");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 310, 40));
 
-        btnframe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnframe.setBackground(new java.awt.Color(102, 102, 255));
+        btnframe.setFont(new java.awt.Font("Showcard Gothic", 1, 12)); // NOI18N
         btnframe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnframe.setText("REGISTRATE AQUÍ");
-        btnframe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 255)));
-        jPanel1.add(btnframe, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 500, 160, 30));
+        btnframe.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.add(btnframe, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 480, 160, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fond-User.jpg"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 434, 451));
@@ -108,6 +125,20 @@ public class FormLogin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtusernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusernameKeyTyped
+        if (txtusername.getText().length() == 15) {
+            evt.consume();
+        }
+        char validar = evt.getKeyChar();
+    }//GEN-LAST:event_txtusernameKeyTyped
+
+    private void txtpasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpasswordKeyTyped
+        if (txtpassword.getText().length() == 15) {
+            evt.consume();
+        }
+        char validar = evt.getKeyChar();
+    }//GEN-LAST:event_txtpasswordKeyTyped
 
     /**
      * @param args the command line arguments

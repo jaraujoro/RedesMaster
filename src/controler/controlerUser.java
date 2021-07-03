@@ -63,6 +63,7 @@ public class controlerUser  extends MouseAdapter implements ActionListener {
                     controlerQuiestion = new controlerQuestion(question,login);
                 }else{
                     message("verifique su usuario o contraseña");
+                    FormLogin.txtusername.requestFocus();
                 }
             } catch (Exception excep) {
                 message("error"+excep); 
