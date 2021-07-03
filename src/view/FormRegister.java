@@ -28,7 +28,6 @@ public class FormRegister extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtpass = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtname = new javax.swing.JTextField();
@@ -45,16 +44,15 @@ public class FormRegister extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JLabel();
+        txtpass = new javax.swing.JPasswordField();
         groundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(390, 530));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtpass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(txtpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, 230, 30));
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,7 +134,10 @@ public class FormRegister extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 450, 160, 40));
 
-        groundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Login.gif"))); // NOI18N
+        txtpass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(txtpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, 230, 30));
+
+        groundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redesjgg.jpg"))); // NOI18N
         jPanel1.add(groundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 530));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 530));
@@ -198,7 +199,7 @@ public class FormRegister extends javax.swing.JFrame {
     public static javax.swing.JTextField txtape;
     public static javax.swing.JTextField txtdni;
     public static javax.swing.JTextField txtname;
-    public static javax.swing.JTextField txtpass;
+    public static javax.swing.JPasswordField txtpass;
     public static javax.swing.JTextField txtuser;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,7 +30,6 @@ public class User {
         this.username = username;
         this.password = password;
     }
-
     public User() {
     }
     public User(int id, String nombre, String apellido, String dni, String username, String password) {
@@ -41,32 +40,27 @@ public class User {
         this.username = username;
         this.password = password;
     }
-
+    public User(String username) {
+        this.username = username;
+    }
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public GestorJDBC getGestorJDBC() {
         return gestorJDBC;
     }
-
     public void setGestorJDBC(GestorJDBC gestorJDBC) {
         this.gestorJDBC = gestorJDBC;
     }
-
     public UserDAO getUserDAO() {
         return userDAO;
     }
-
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
-    
-   
     public String getNombre() {
         return nombre;
     }
@@ -114,7 +108,7 @@ public class User {
         gestorJDBC.abrirConexion();
         try {
             gestorJDBC.iniciarTransaccion();
-            int data = userDAO.verificarUsuario(username);
+            int data = userDAO.existUser(username);
             gestorJDBC.terminarTransaccion();
             return data;
         } catch (SQLException ex) {

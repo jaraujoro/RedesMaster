@@ -42,18 +42,13 @@ public class UserDAO {
         } 
          return usuario ;
     }
-    public int verificarUsuario(String username) {        
+    public int existUser(String username)throws SQLException{        
         int existe=0;  
         ResultSet rs;
         String sql = "SELECT nick FROM usuario WHERE nick ='"+username+"'";
-        try{
-           rs=gestorJDBC.ejecutarConsulta(sql);  
-            if(rs.next())
-            existe =1;
-          JOptionPane.showMessageDialog(null,"El username ingresado ya existe");
-        } catch(Exception e){
-            System.err.print("Ha ocurrido un error: "+ e.getMessage());
-        }   
-        return 1;
+        rs=gestorJDBC.ejecutarConsulta(sql); 
+        if(rs.next())
+        existe =1;
+        return existe;  
     }
 }

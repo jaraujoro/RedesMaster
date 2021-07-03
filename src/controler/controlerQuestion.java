@@ -108,7 +108,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             try {
                 if(historial!=null){
                 for (int j = 0; j < historial.listHistorial(userHistorial).size(); j++) {
-                    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");    
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");    
                     datos[0]=historial.listHistorial(userHistorial).get(j).getCapitulo();
                     datos[1]=String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_correcta());
                     datos[2]=String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_incorrecta());
@@ -220,15 +220,13 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //event's buttom's
         if(FormQuestions.btnSalir==e.getSource()){
-            
             System.exit(0);
         }
         if(FormQuestions.btnHistorial==e.getSource()){
             question.PanelHistorial.setVisible(true);
             question.PanelBotonesIndice.setVisible(false);
             //userhistorial = question.labelUser.getText();
-            listaHistorial();
-            
+            listaHistorial();   
         }
         if(FormQuestions.btnCerrarHistorial==e.getSource()){
             question.PanelHistorial.setVisible(false);

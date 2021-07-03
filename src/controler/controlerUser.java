@@ -1,5 +1,6 @@
 package controler;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -44,6 +45,7 @@ public class controlerUser  extends MouseAdapter implements ActionListener {
         FormRegister.txtpass.setText("");
         FormLogin.txtpassword.setText("");
         FormLogin.txtusername.setText("");
+        FormRegister.txtuser.setForeground(Color.black);
     }
     @Override
     //events buttoms
@@ -67,38 +69,43 @@ public class controlerUser  extends MouseAdapter implements ActionListener {
             }
         }
          if(FormRegister.btnregistro == e.getSource()){ 
-           System.out.println("login here");
-           String nombre=FormRegister.txtname.getText();
-           String apellido=FormRegister.txtape.getText();
-           String dni=FormRegister.txtdni.getText();
-           String username=FormRegister.txtuser.getText();
-           String password=FormRegister.txtpass.getText();
-           user = new  User(nombre, apellido, dni, username, password);
-           try {
-             if(nombre.equals("") || apellido.equals("") || dni.equals("") || username.equals("") || password.equals("")){
+            System.out.println("register here");
+            String nombre = FormRegister.txtname.getText();
+            String apellido = FormRegister.txtape.getText();
+            String dni = FormRegister.txtdni.getText();
+            String username = FormRegister.txtuser.getText();
+            String password = FormRegister.txtpass.getText();
+            user = new User(nombre, apellido, dni, username, password);
+            if (nombre.equals("") || apellido.equals("") || dni.equals("") || username.equals("") || password.equals("")) {
                 message("Llenar obligatoriamente todos los campos");
-             }else{
-               int x = user.registerUser();
-               if(x>0){
-                 message("registrado correctamente");
-                 Clear();
-                 register.setVisible(false);
-                 login.setVisible(true);
-               }else{
-                 message("error");
-               }
+            } else {
+                try {
+                    int existUser = 0;
+                    existUser = user.ExistUser(username);
+                    if (existUser > 0) {
+                        message("Lo sentimos, el Username ya se encuentra el uso");
+                        FormRegister.txtuser.setForeground(Color.red);
+                        FormRegister.txtuser.requestFocus();
+                    } else {
+                        int registerUser = user.registerUser();
+                        if (registerUser > 0) {
+                            message("registrado correctamente");
+                            Clear();
+                            register.setVisible(false);
+                            login.setVisible(true);
+                        }
+                    }
+                } catch (Exception ex) {
+                    System.out.println("error " + ex);
+                }
             }
-           }catch (Exception ex) {
-                 System.out.println("error "+ ex);
-           }     
-        } 
+        }
     }
     @Override
     //events label
     public void mouseClicked(MouseEvent e) {
         //salto de pagina a frmRegister
         if (FormLogin.btnframe == e.getSource()) {
-           
            login.setVisible(false);
            register.setVisible(true); 
         }
