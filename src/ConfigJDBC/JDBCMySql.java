@@ -5,8 +5,8 @@ import java.sql.SQLException;
  * @author Araujo
  */
 public class JDBCMySql extends GestorJDBC {
-        @Override
-        public void abrirConexion() throws Exception {
+    @Override
+    public void abrirConexion() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/redes?useSSL=false";
@@ -15,6 +15,5 @@ public class JDBCMySql extends GestorJDBC {
         } catch (SQLException e) {
             throw new Exception("Error en la conexion con la base de datos, consulte con el administrador." + e);
         }
-
     }
 }

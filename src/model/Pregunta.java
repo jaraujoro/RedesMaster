@@ -1,4 +1,3 @@
-
 package model;
 
 public class Pregunta {
@@ -6,7 +5,7 @@ public class Pregunta {
     private String pregunta;
     private int numeroPregunta;
     private Capitulo capitulo;
-
+    
     public Pregunta(Capitulo capitulo) {
         this.capitulo = capitulo;
     }
@@ -38,7 +37,7 @@ public class Pregunta {
     public Pregunta(String pregunta) {
         this.pregunta = pregunta;
     }
-    
+
     public int getIdPregunta() {
         return idPregunta;
     }
@@ -46,7 +45,6 @@ public class Pregunta {
     public void setIdPregunta(int idPregunta) {
         this.idPregunta = idPregunta;
     }
-
 
     public String getPregunta() {
         return pregunta;
@@ -63,5 +61,5 @@ public class Pregunta {
     public void setNumeroPregunta(int numeroPregunta) {
         this.numeroPregunta = numeroPregunta;
     }
-    
+
 }

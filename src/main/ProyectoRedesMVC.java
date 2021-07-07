@@ -11,12 +11,13 @@ public class ProyectoRedesMVC {
     public static FormLogin login;
     public static FormRegister register;
     public static controlerUser controlador;
-    public static FormQuestions  question;
+    public static FormQuestions question;
+
     public static void main(String[] args) throws Exception {
         login = new FormLogin();
         register = new FormRegister();
         login.setVisible(true);
-        controlador = new controlerUser(login,question);               
+        controlador = new controlerUser(login, question);
     }
     
 }

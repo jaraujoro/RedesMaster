@@ -1,16 +1,13 @@
 package model;
-
 import ConfigJDBC.GestorJDBC;
 import ConfigJDBC.JDBCMySql;
 import DataAccessObject.QuestionDAO;
-import java.sql.SQLException;
-
 
 public class Capitulo {
-private int idCapitulo;
-private String capitulo;
-private GestorJDBC gestorJDBC= new JDBCMySql();
-private QuestionDAO questionDAO= new QuestionDAO(gestorJDBC);
+    private int idCapitulo;
+    private String capitulo;
+    private GestorJDBC gestorJDBC = new JDBCMySql();
+    private QuestionDAO questionDAO = new QuestionDAO(gestorJDBC);
     
     public Capitulo(String capitulo) {
         this.capitulo = capitulo;
@@ -36,7 +33,6 @@ private QuestionDAO questionDAO= new QuestionDAO(gestorJDBC);
         this.questionDAO = questionDAO;
     }
 
-
     public void setIdCapitulo(int idCapitulo) {
         this.idCapitulo = idCapitulo;
     }
@@ -48,6 +44,7 @@ private QuestionDAO questionDAO= new QuestionDAO(gestorJDBC);
     public void setCapitulo(String capitulo) {
         this.capitulo = capitulo;
     }
+
     public Capitulo(int idCapitulo, String capitulo) {
         this.idCapitulo = idCapitulo;
         this.capitulo = capitulo;
@@ -55,5 +52,5 @@ private QuestionDAO questionDAO= new QuestionDAO(gestorJDBC);
 
     public Capitulo() {
     }
-    
+
 }

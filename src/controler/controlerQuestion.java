@@ -6,48 +6,42 @@ import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Capitulo;
 import model.Historial;
 import model.Pregunta;
 import model.Respuesta;
-import model.User;
-import sun.swing.table.DefaultTableCellHeaderRenderer;
+import model.Usuario;
 import view.FormLogin;
 import view.FormQuestions;
-
 public class controlerQuestion  extends MouseAdapter implements ActionListener {
  FormQuestions question;
  FormLogin login;
- User user;
+ Usuario user;
  Capitulo cap;
  Respuesta res;
  Pregunta pre;
  private Historial historial;
  String capitulo;
- int x = 0;
- int a = 220;
+ int windowX = 0;
+ int windowY = 220;
  int pregunta=1;
- int counter;
- int max=49;
- int arreglo[]=new int[max];
- int i=0;
- int pos;
+ int numeroPregunta;
+ int maximoNumero=49;
+ int arreglo[]=new int[maximoNumero];
+ int regenerarArray=0;
+ int posicion;
  int numeroCapitulo;
  int buena=0;
  int mala=0;
  int notaEstudiante=0;
  int insertarHistorial=0;
  Date fecha;
- //String userhistorial;
  public controlerQuestion(FormQuestions question,FormLogin login) throws Exception{
      this.question=question;
      this.login=login;
-     user = new User();
+     user = new Usuario();
      FormQuestions.btnNext.addActionListener(this);
      FormQuestions.btnIndice.addActionListener(this);
      FormQuestions.btnCap1.addActionListener(this);
@@ -85,17 +79,13 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
      question.respuesta3.setOpaque(false);
      question.respuesta4.setOpaque(false);
      question.sumNota.setVisible(false);
-     question.PanelHistorial.setVisible(false);
-     question.labelUser.setText("Usuario: "+FormLogin.txtusername.getText());
-     
+     question.PanelHistorial.setVisible(false); 
  }
- /*Metodos para la clase*/
+    /*Metodos para la clase*/
     public void message(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje);
     }
-    public void listaHistorial() {
-        //DefaultTableCellRenderer center = new DefaultTableCellHeaderRenderer();
-        //center.setHorizontalAlignment(SwingConstants.CENTER);
+    public void listarHistorial() {
         DefaultTableModel userHistory = new DefaultTableModel();
         userHistory.addColumn("Capitulo");
         userHistory.addColumn("Nº Aciertos");
@@ -107,14 +97,14 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         String userHistorial = FormLogin.txtusername.getText();
         historial = new Historial();
         try {
-            if (historial != null) {
-                for (int j = 0; j < historial.listHistorial(userHistorial).size(); j++) {
+            if (historial != null){
+                for (int j = 0; j < historial.listarHistorialUsuario(userHistorial).size(); j++) {
                     SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");                    
-                    datos[0] = historial.listHistorial(userHistorial).get(j).getCapitulo();
-                    datos[1] = String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_correcta());
-                    datos[2] = String.valueOf(historial.listHistorial(userHistorial).get(j).getRespuesta_incorrecta());
-                    datos[3] = String.valueOf(historial.listHistorial(userHistorial).get(j).getNota());
-                    datos[4] = formatoFecha.format(historial.listHistorial(userHistorial).get(j).getFecha());
+                    datos[0] = historial.listarHistorialUsuario(userHistorial).get(j).getCapitulo();
+                    datos[1] = String.valueOf(historial.listarHistorialUsuario(userHistorial).get(j).getRespuesta_correcta());
+                    datos[2] = String.valueOf(historial.listarHistorialUsuario(userHistorial).get(j).getRespuesta_incorrecta());
+                    datos[3] = String.valueOf(historial.listarHistorialUsuario(userHistorial).get(j).getNota());
+                    datos[4] = formatoFecha.format(historial.listarHistorialUsuario(userHistorial).get(j).getFecha());
                     userHistory.addRow(datos);                    
                 }
             }
@@ -123,15 +113,14 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             message("error" + c);
         }        
     }
-    public void correcta() {
+    public void respuestaCorrecta() {
         buena++;
         question.Correcta.setText("ACIERTOS: " + buena + "");
         FormQuestions.txtRespuesta.setText("<html><font color='green'size=5>RESPUESTA CORRECTA");
         question.PanelOpciones.setVisible(false);
         notaEstudiante();
     }
-
-    public void incorrecta() {
+    public void respuestaIncorrecta() {
         mala++;
         question.Incorrecta.setText("DESACIERTOS: " + mala + "");
         FormQuestions.txtRespuesta.setText("<html><font color='red'size=5>RESPUESTA INCORRECTA");
@@ -139,18 +128,17 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         notaEstudiante();
     }
     public void imagenPregunta() {
-        if (capitulo == "CAP4" & (counter == 15 | counter == 16)) {
+        if (capitulo == "CAP4" & (numeroPregunta == 15 | numeroPregunta == 16)) {
             question.imagen1.setVisible(true);
         } else {
             question.imagen1.setVisible(false);
         }
-        if (capitulo == "CAP4" & counter == 20) {
+        if (capitulo == "CAP4" & numeroPregunta == 20) {
             question.imagen2.setVisible(true);
         } else {
             question.imagen2.setVisible(false);
         }
     }
-
     public void notaEstudiante() {
         if (insertarHistorial > 0) {
             if (pregunta == 10) {
@@ -165,10 +153,10 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         }        
     }
     public void regenerarArray() {
-        if (arreglo[i] == 0) {            
-            arreglo[i] = (int) (Math.random() * max + 1);
-            for (int i = 1; i < max; i++) {
-                arreglo[i] = (int) (Math.random() * max + 1);                
+        if (arreglo[regenerarArray] == 0) {            
+            arreglo[regenerarArray] = (int) (Math.random() * maximoNumero + 1);
+            for (int i = 1; i < maximoNumero; i++) {
+                arreglo[i] = (int) (Math.random() * maximoNumero + 1);                
                 for (int j = 0; j < i; j++) {
                     if (arreglo[i] == arreglo[j]) {
                         i--;
@@ -182,18 +170,18 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         insertarHistorial=1;
         int capAlt = ((int) (Math.random()*(11-1))+1);
         numeroCapitulo=capAlt;
-       if(numeroCapitulo==1){max=19;}
-       if(numeroCapitulo==2){max=18;}
-       if(numeroCapitulo==3){max=24;}
-       if(numeroCapitulo==4){max=20;}
-       if(numeroCapitulo==5){max=36;}
-       if(numeroCapitulo==6){max=49;}
-       if(numeroCapitulo==7){max=49;}
-       if(numeroCapitulo==8){max=34;}
-       if(numeroCapitulo==9){max=24;}
-       if(numeroCapitulo==10){max=22;}
-       pos = 0;       
-        for (int n = 0; n < max; n++) {
+       if(numeroCapitulo==1){maximoNumero=19;}
+       if(numeroCapitulo==2){maximoNumero=18;}
+       if(numeroCapitulo==3){maximoNumero=24;}
+       if(numeroCapitulo==4){maximoNumero=20;}
+       if(numeroCapitulo==5){maximoNumero=36;}
+       if(numeroCapitulo==6){maximoNumero=49;}
+       if(numeroCapitulo==7){maximoNumero=49;}
+       if(numeroCapitulo==8){maximoNumero=34;}
+       if(numeroCapitulo==9){maximoNumero=24;}
+       if(numeroCapitulo==10){maximoNumero=22;}
+       posicion = 0;       
+        for (int n = 0; n < maximoNumero; n++) {
             arreglo[n] = 0;
         }       
        capitulo="CAP"+numeroCapitulo;
@@ -214,14 +202,14 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
     }
     public void mostrarDatos(String capi) {
         regenerarArray();
-        pos++;
-        counter = (arreglo[pos]);
+        posicion++;
+        numeroPregunta = (arreglo[posicion]);
         cap = new Capitulo();
         res = new Respuesta();
         pre = new Pregunta();
         try {
             String datecapi = capi;
-            res = res.Data(datecapi, counter);
+            res = res.obtenerDatos(datecapi, numeroPregunta);
             if (res != null) {
                 cap = res.getPregunta().getCapitulo();
                 FormQuestions.numeroPregunta.setText("Pregunta: " + pregunta);
@@ -235,15 +223,14 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
                 question.Correcta.setText("ACIERTOS: " + buena + "");
                 question.Incorrecta.setText("DESACIERTOS: " + mala + "");
                 imagenPregunta();
-                //s
             }
         } catch (Exception problem) {
             message("Problem" + problem);
         }
-    }                                                                              
+    }
+    //event's buttom's
     @Override
     public void actionPerformed(ActionEvent e) {
-        //event's buttom's
         if(FormQuestions.btnSalir==e.getSource()){
             System.exit(0);
         }
@@ -252,9 +239,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
             question.PanelBotonesIndice.setVisible(false);
             //userhistorial = question.labelUser.getText();
             question.PanelMenu.setVisible(false);
-              x = 0;
-              a = 220;      
-            listaHistorial();   
+            windowX = 0;
+            windowY = 220;
+            listarHistorial();
         }
         if(FormQuestions.btnCerrarHistorial==e.getSource()){
             question.PanelHistorial.setVisible(false);
@@ -265,328 +252,328 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
          //question.PanelOpciones.setVisible(false);
            question.PanelRecuerda.setVisible(true);
            if("CAP1".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 2
         if("CAP2".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 3
         if("CAP3".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==20){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==21){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==22){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==23){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==24){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==20){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==21){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==22){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==23){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==24){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 4
         if("CAP4".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==20){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==20){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 5
         if("CAP5".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==20){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==21){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==22){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==23){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==24){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==25){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==26){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==27){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==28){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==29){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==30){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==31){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==32){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==33){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==34){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==35){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==36){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==20){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==21){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==22){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==23){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==24){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==25){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==26){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==27){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==28){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==29){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==30){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==31){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==32){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==33){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==34){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==35){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==36){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 6
         if("CAP6".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==20){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==21){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==22){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==23){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==24){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==25){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==26){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==27){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==28){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==29){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==30){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==31){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==32){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==33){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==34){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==35){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==36){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==37){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==38){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==39){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==40){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==41){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==42){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==43){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==44){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==45){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==46){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==47){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==48){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==49){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==20){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==21){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==22){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==23){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==24){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==25){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==26){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==27){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==28){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==29){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==30){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==31){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==32){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==33){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==34){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==35){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==36){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==37){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==38){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==39){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==40){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==41){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==42){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==43){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==44){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==45){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==46){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==47){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==48){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==49){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 7
         if("CAP7".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==20){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==21){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==22){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==23){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==24){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==25){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==26){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==27){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==28){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==29){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==30){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==31){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==32){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==33){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==34){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==35){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==36){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==37){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==38){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==39){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==40){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==41){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==42){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==43){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==44){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==45){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==46){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==47){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==48){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==49){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==20){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==21){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==22){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==23){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==24){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==25){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==26){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==27){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==28){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==29){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==30){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==31){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==32){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==33){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==34){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==35){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==36){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==37){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==38){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==39){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==40){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==41){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==42){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==43){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==44){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==45){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==46){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==47){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==48){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==49){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 8
         if("CAP8".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==20){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==21){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==22){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==23){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==24){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==25){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==26){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==27){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==28){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==29){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==30){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==31){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==32){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==33){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==34){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==20){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==21){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==22){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==23){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==24){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==25){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==26){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==27){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==28){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==29){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==30){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==31){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==32){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==33){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==34){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 9
         if("CAP9".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==20){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==21){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==22){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==23){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==24){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==20){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==21){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==22){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==23){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==24){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //CAPITULO 10
         if("CAP10".equals(capitulo)){
-            if(counter==1){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==2){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==3){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==4){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==5){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==6){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==7){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==8){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==9){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==10){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==11){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==12){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==13){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==14){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==15){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==16){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==17){if(FormQuestions.respuesta2.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==18){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==19){if(FormQuestions.respuesta4.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==20){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==21){if(FormQuestions.respuesta3.isSelected()==false){incorrecta();}else{correcta();}}
-            if(counter==22){if(FormQuestions.respuesta1.isSelected()==false){incorrecta();}else{correcta();}}
+            if(numeroPregunta==1){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==2){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==3){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==4){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==5){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==6){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==7){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==8){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==9){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==10){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==11){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==12){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==13){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==14){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==15){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==16){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==17){if(FormQuestions.respuesta2.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==18){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==19){if(FormQuestions.respuesta4.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==20){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==21){if(FormQuestions.respuesta3.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
+            if(numeroPregunta==22){if(FormQuestions.respuesta1.isSelected()==false){respuestaIncorrecta();}else{respuestaCorrecta();}}
         }
         //FormQuestions.btnNextPregunta.setEnabled(false);
         }
@@ -602,7 +589,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
                    fecha = fecha = Date.valueOf(LocalDate.now()); 
                     try {
                         historial = new Historial(usuario, capitule, rescorrect, resincorrect, nota, fecha);
-                        int x = historial.sendNote();
+                        int x = historial.registrarHistorialUsuario();
                         if(x>0){
                             insertarHistorial=0;
                         }else{
@@ -647,9 +634,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=19;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=19;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP1";
@@ -660,9 +647,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=18;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=18;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP2";
@@ -673,9 +660,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=24;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=24;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP3";
@@ -686,9 +673,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=20;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=20;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP4";
@@ -699,9 +686,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=36;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=36;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP5";
@@ -712,9 +699,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=49;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=49;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP6";
@@ -725,9 +712,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=49;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=49;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP7";
@@ -738,9 +725,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=34;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=34;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP8";
@@ -751,9 +738,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=24;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=24;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP9";
@@ -764,9 +751,9 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelPreguntas.setVisible(true);
            desactivarCapitulos();
            pregunta=1;
-           max=22;
-           pos=0;
-           for(int n = 0; n<max; n++){
+           maximoNumero=22;
+           posicion=0;
+           for(int n = 0; n<maximoNumero; n++){
                arreglo[n]=0;
            }
            capitulo="CAP10";
@@ -810,14 +797,14 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
            question.PanelMenu.setVisible(false);
            capituloAleatorio();
            mostrarDatos(capitulo);
-           x=0;
-           a=220;
+           windowX=0;
+           windowY=220;
         }
         if(FormQuestions.btnIndice == e.getSource()){
             question.PanelMenu.setVisible(true);
             question.Correcta.setVisible(false);
             question.Incorrecta.setVisible(false);
-          if (x == 220) {  
+          if (windowX == 220) {  
             question.PanelMenu.setSize(220, 570);
             Thread th = new Thread() {
                 @Override
@@ -826,7 +813,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
                         for (int i = 220; i >= 0; i--) {
                             Thread.sleep(2);
                         question.PanelMenu.setSize(i, 570);
-                            a++;
+                            windowY++;
                         }
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e);
@@ -834,14 +821,14 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
                 }
             };
             th.start();
-            x = 0;
-        }else if(x == 0){
-            question.PanelMenu.setSize(x, 570);
+            windowX = 0;
+        }else if(windowX == 0){
+            question.PanelMenu.setSize(windowX, 570);
             Thread th = new Thread() {
                 @Override
                 public void run() {
                     try {
-                        for (int i = 0; i <= x; i++) {
+                        for (int i = 0; i <= windowX; i++) {
                             Thread.sleep(2);
                             question.PanelMenu.setSize(i, 570);
                         }
@@ -851,7 +838,7 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
                 }
             };
             th.start();
-            x = 220;
+            windowX = 220;
                         }
         }      
     }

@@ -54,10 +54,10 @@ public class FormQuestions extends javax.swing.JFrame {
         labelUser = new javax.swing.JLabel();
         PanelHistorial = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jLabel8 = new javax.swing.JLabel();
         btnCerrarHistorial = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         PanelPreguntas = new javax.swing.JPanel();
         SubPanel = new javax.swing.JTabbedPane();
         IniciarPregunta = new javax.swing.JPanel();
@@ -94,7 +94,7 @@ public class FormQuestions extends javax.swing.JFrame {
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1000, 625));
+        setMinimumSize(new java.awt.Dimension(1000, 620));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -250,20 +250,12 @@ public class FormQuestions extends javax.swing.JFrame {
 
         getContentPane().add(PanelDeslice, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 50));
 
+        PanelHistorial.setBackground(new java.awt.Color(0, 0, 0));
         PanelHistorial.setLayout(null);
 
         tablaUserHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
 
@@ -272,38 +264,42 @@ public class FormQuestions extends javax.swing.JFrame {
         tablaUserHistorial.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tablaUserHistorial.setEditingColumn(0);
         tablaUserHistorial.setEditingRow(0);
+        tablaUserHistorial.setEnabled(false);
         tablaUserHistorial.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(tablaUserHistorial);
         tablaUserHistorial.getAccessibleContext().setAccessibleName("");
         tablaUserHistorial.getAccessibleContext().setAccessibleDescription("");
 
         PanelHistorial.add(jScrollPane1);
-        jScrollPane1.setBounds(40, 50, 452, 151);
-
-        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("CURSO DE REDES Y COMUNICACIONES");
-        PanelHistorial.add(jLabel8);
-        jLabel8.setBounds(40, 210, 450, 38);
+        jScrollPane1.setBounds(60, 60, 452, 151);
 
         btnCerrarHistorial.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCerrarHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close.png"))); // NOI18N
+        btnCerrarHistorial.setBorder(null);
+        btnCerrarHistorial.setBorderPainted(false);
+        btnCerrarHistorial.setFocusPainted(false);
+        btnCerrarHistorial.setRequestFocusEnabled(false);
         PanelHistorial.add(btnCerrarHistorial);
-        btnCerrarHistorial.setBounds(0, 0, 40, 40);
+        btnCerrarHistorial.setBounds(530, 0, 40, 40);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("HISTORIAL USUARIO");
         PanelHistorial.add(jLabel9);
-        jLabel9.setBounds(40, 0, 450, 38);
+        jLabel9.setBounds(0, 0, 570, 60);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/notas.png"))); // NOI18N
         PanelHistorial.add(jLabel10);
-        jLabel10.setBounds(350, 0, 50, 40);
+        jLabel10.setBounds(350, 10, 110, 40);
 
-        getContentPane().add(PanelHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 540, 270));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/voltis.jpg"))); // NOI18N
+        PanelHistorial.add(jLabel12);
+        jLabel12.setBounds(0, 0, 570, 270);
+
+        getContentPane().add(PanelHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 570, 270));
 
         PanelPreguntas.setBackground(new java.awt.Color(184, 207, 229));
         PanelPreguntas.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -394,13 +390,13 @@ public class FormQuestions extends javax.swing.JFrame {
         IniciarPregunta.add(btnNextPregunta);
         btnNextPregunta.setBounds(480, 380, 170, 30);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Banner Oficial.gif"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/registerB.jpg"))); // NOI18N
         IniciarPregunta.add(jLabel5);
         jLabel5.setBounds(0, 350, 700, 80);
         IniciarPregunta.add(Incorrecta);
-        Incorrecta.setBounds(470, 60, 110, 20);
+        Incorrecta.setBounds(520, 60, 120, 20);
         IniciarPregunta.add(Correcta);
-        Correcta.setBounds(370, 60, 90, 20);
+        Correcta.setBounds(390, 60, 110, 20);
 
         SubPanel.addTab("PREGUNTAS", IniciarPregunta);
 
@@ -467,7 +463,7 @@ public class FormQuestions extends javax.swing.JFrame {
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAleatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIndice, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         PanelBotonesIndiceLayout.setVerticalGroup(
             PanelBotonesIndiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,7 +479,7 @@ public class FormQuestions extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        getContentPane().add(PanelBotonesIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 220, 240));
+        getContentPane().add(PanelBotonesIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 230, 240));
 
         FondoTotal.setMinimumSize(new java.awt.Dimension(1000, 625));
         FondoTotal.setPreferredSize(new java.awt.Dimension(1000, 620));
@@ -496,7 +492,7 @@ public class FormQuestions extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("MENÚ PRINCIPAL");
-        FondoTotal.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 490, 120));
+        FondoTotal.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 780, 120));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redesImg.jpg"))); // NOI18N
         FondoTotal.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 620));
@@ -582,13 +578,13 @@ public class FormQuestions extends javax.swing.JFrame {
     public javax.swing.JLabel imagen2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

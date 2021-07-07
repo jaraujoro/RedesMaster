@@ -3,12 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/model/Respuesta.java</file>
             <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/DataAccessObject/QuestionDAO.java</file>
-            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/controler/controlerQuestion.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/model/Usuario.java</file>
             <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/controler/controlerUser.java</file>
             <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/DataAccessObject/UserDAO.java</file>
-            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/ConfigJDBC/JDBCMySql.java</file>
             <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/view/FormQuestions.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/model/Historial.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/main/ProyectoRedesMVC.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/DataAccessObject/HistoryUserDAO.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/model/Capitulo.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/view/FormRegister.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/ConfigJDBC/GestorJDBC.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/view/FormLogin.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/controler/controlerQuestion.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/ConfigJDBC/JDBCMySql.java</file>
+            <file>file:/C:/Users/Spider/Documents/NetBeansProjects/Proyecto_Redes-master/src/model/Pregunta.java</file>
         </group>
     </open-files>
 </project-private>

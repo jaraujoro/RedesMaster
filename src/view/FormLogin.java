@@ -106,7 +106,7 @@ public class FormLogin extends javax.swing.JFrame {
         btnframe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnframe.setText("REGISTRATE AQUÍ");
         btnframe.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(btnframe, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 480, 160, 30));
+        jPanel1.add(btnframe, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 480, 150, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fond-User.jpg"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 434, 451));
