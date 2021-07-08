@@ -7,6 +7,7 @@ package view;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +24,16 @@ public class FormRegister extends javax.swing.JFrame {
         Image ico = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/Log.png"));
         this.setIconImage(ico);
     }
-
+    public void validarCaracteres(java.awt.event.KeyEvent evento){
+        if(evento.getKeyChar() >=33 && evento.getKeyChar() <=64
+           || evento.getKeyChar() >=91 && evento.getKeyChar() <=96
+           || evento.getKeyChar() >=123 && evento.getKeyChar() <=208
+           || evento.getKeyChar() >=210 && evento.getKeyChar() <=240
+           || evento.getKeyChar() >=242 && evento.getKeyChar() <=255){
+           evento.consume();
+            JOptionPane.showMessageDialog(this,"No se permiten caracteres especiales");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -276,7 +286,7 @@ public class FormRegister extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtnameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnameKeyTyped
-        if (txtname.getText().length() == 15) {
+        if (txtname.getText().length() == 27) {
             evt.consume();
         }
         char validar = evt.getKeyChar();
@@ -284,10 +294,11 @@ public class FormRegister extends javax.swing.JFrame {
             getToolkit().beep();
             evt.consume();
         }
+        validarCaracteres(evt);
     }//GEN-LAST:event_txtnameKeyTyped
 
     private void txtapeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtapeKeyTyped
-        if (txtape.getText().length() == 15) {
+        if (txtape.getText().length() == 27) {
             evt.consume();
         }
         char validar = evt.getKeyChar();
@@ -295,6 +306,7 @@ public class FormRegister extends javax.swing.JFrame {
             getToolkit().beep();
             evt.consume();
         }
+        validarCaracteres(evt);
     }//GEN-LAST:event_txtapeKeyTyped
 
     private void txtdniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdniKeyTyped
@@ -306,17 +318,15 @@ public class FormRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_txtdniKeyTyped
 
     private void txtuserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtuserKeyTyped
-        if (txtuser.getText().length() == 15) {
+        if (txtuser.getText().length() == 28) {
             evt.consume();
         }
-        char validar = evt.getKeyChar();
     }//GEN-LAST:event_txtuserKeyTyped
 
     private void txtpassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpassKeyTyped
          if (txtpass.getText().length() == 15) {
             evt.consume();
         }
-        char validar = evt.getKeyChar();
     }//GEN-LAST:event_txtpassKeyTyped
 
     /**

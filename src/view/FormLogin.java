@@ -127,7 +127,7 @@ public class FormLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtusernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusernameKeyTyped
-        if (txtusername.getText().length() == 15) {
+        if (txtusername.getText().length() == 28) {
             evt.consume();
         }
         char validar = evt.getKeyChar();
