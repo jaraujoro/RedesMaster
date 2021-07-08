@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Usuario;
 
-
 public class UserDAO {
     GestorJDBC gestorJDBC;
     public UserDAO(GestorJDBC gestorJDBC) {
@@ -28,7 +27,6 @@ public class UserDAO {
         String sql = "SELECT * FROM  usuario where nick=?";
         PreparedStatement sentencia = gestorJDBC.prepararSentencia(sql);
         sentencia.setString(1, username);
-        // sentencia.setString(2, password);
         ResultSet res = sentencia.executeQuery();
         if (res.next()) {
             usuario = new Usuario(
@@ -43,9 +41,10 @@ public class UserDAO {
     }
     public int existeUsuario(String username) throws SQLException {
         int existe = 0;
-        ResultSet rs;
-        String sql = "SELECT nick FROM usuario WHERE nick ='" + username + "'";
-        rs = gestorJDBC.ejecutarConsulta(sql);
+        String sql = "SELECT nick FROM usuario WHERE nick =?";
+        PreparedStatement sentencia =gestorJDBC.prepararSentencia(sql);
+        sentencia.setString(1,username);
+        ResultSet rs = sentencia.executeQuery();
         if (rs.next()) {
             existe = 1;
         }

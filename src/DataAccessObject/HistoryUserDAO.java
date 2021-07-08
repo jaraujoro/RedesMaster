@@ -16,19 +16,20 @@ public class HistoryUserDAO {
     }
     public List<Historial> listarHistorial(String nick) throws SQLException {
         ArrayList<Historial> listarHistorial = new ArrayList<>();
-        ResultSet resultadoHistorial;
-        String sql = "select * FROM historial where usuario='" + nick + "' ORDER by idhistorial  DESC";
-        resultadoHistorial = gestorJDBC.ejecutarConsulta(sql);
-        while (resultadoHistorial.next()) {
-            Historial historial = new Historial();
-            historial.setCapitulo(resultadoHistorial.getString("capitulo"));
-            historial.setRespuesta_correcta(resultadoHistorial.getInt("respuesta_correcta"));
-            historial.setRespuesta_incorrecta(resultadoHistorial.getInt("respuesta_incorrecta"));
-            historial.setNota(resultadoHistorial.getInt("nota"));
-            historial.setFecha(resultadoHistorial.getDate("fecha"));
-            listarHistorial.add(historial);
+        String sql = "select * FROM historial where usuario= ? ORDER by idhistorial  DESC";
+        PreparedStatement sentencia = gestorJDBC.prepararSentencia(sql);
+        sentencia.setString(1,nick);
+        try (ResultSet resultadoHistorial = sentencia.executeQuery()) {
+            while (resultadoHistorial.next()) {
+                Historial historial = new Historial();
+                historial.setCapitulo(resultadoHistorial.getString("capitulo"));
+                historial.setRespuesta_correcta(resultadoHistorial.getInt("respuesta_correcta"));
+                historial.setRespuesta_incorrecta(resultadoHistorial.getInt("respuesta_incorrecta"));
+                historial.setNota(resultadoHistorial.getInt("nota"));
+                historial.setFecha(resultadoHistorial.getDate("fecha"));
+                listarHistorial.add(historial);
+            }
         }
-        resultadoHistorial.close();
         return listarHistorial;
     }
     public int registrarHistorial(Historial historial) throws SQLException {
@@ -44,8 +45,7 @@ public class HistoryUserDAO {
         return sentencia.executeUpdate();
     }
 }
-/*
-    public Historial ObtenerHistorial(String nick)throws SQLException{
+/*  public Historial ObtenerHistorial(String nick)throws SQLException{
         Historial historial=null;
         String sql="select * FROM historial where usuario=?";
         PreparedStatement sentencia=gestorJDBC.prepararSentencia(sql);
@@ -76,5 +76,4 @@ public class HistoryUserDAO {
             resultado_historial.getDate("fecha"));    
         }
         return historial;
-    }
-     */
+    }*/
