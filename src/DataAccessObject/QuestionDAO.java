@@ -12,14 +12,14 @@ public class QuestionDAO {
     public QuestionDAO(GestorJDBC gestorJDBC) {
         this.gestorJDBC = gestorJDBC;
     }
-    public Respuesta obtenerDatos(String x, int num) throws SQLException {
+    public Respuesta obtenerDatos(String capitulo, int numumero) throws SQLException {
         Respuesta respuesta = null;
         ResultSet resultado_cap;
         String sql ="SELECT c.capitulo,c.idcapitulo, p.idpregunta,p.pregunta,r.idrespuesta,\n"
                 + "r.respuesta1, r.respuesta2,r.respuesta3,r.respuesta4, r.Mensaje \n"
                 + "FROM capitulo c INNER JOIN pregunta p on c.idcapitulo=p.idcapitulo \n"
                 + "INNER JOIN respuesta r on p.idpregunta=r.idpregunta \n"
-                + "WHERE c.idcapitulo='" + x + "' and p.Numero='" + num + "'";
+                + "WHERE c.idcapitulo='" + capitulo + "' and p.Numero='" + numumero + "'";
         resultado_cap = gestorJDBC.ejecutarConsulta(sql);
         while (resultado_cap.next()) {
             //capitulo;

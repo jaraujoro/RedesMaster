@@ -110,7 +110,7 @@ public class controlerUser extends MouseAdapter implements ActionListener {
                     int existUser = 0;
                     existUser = user.existeUsuario(username);
                     if (existUser > 0) {
-                        message("Lo sentimos, el Username ya se encuentra el uso");
+                        message("Lo sentimos, el Username ya se encuentra en uso");
                         FormRegister.txtuser.setForeground(Color.red);
                         FormRegister.txtuser.requestFocus();
                     } else {

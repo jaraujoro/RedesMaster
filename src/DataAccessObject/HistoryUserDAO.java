@@ -17,7 +17,7 @@ public class HistoryUserDAO {
     public List<Historial> listarHistorial(String nick) throws SQLException {
         ArrayList<Historial> listarHistorial = new ArrayList<>();
         ResultSet resultadoHistorial;
-        String sql = "select * FROM historial where usuario='" + nick + "' ORDER by fecha  DESC";
+        String sql = "select * FROM historial where usuario='" + nick + "' ORDER by idhistorial  DESC";
         resultadoHistorial = gestorJDBC.ejecutarConsulta(sql);
         while (resultadoHistorial.next()) {
             Historial historial = new Historial();

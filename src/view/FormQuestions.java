@@ -53,10 +53,10 @@ public class FormQuestions extends javax.swing.JFrame {
         PanelDeslice = new javax.swing.JPanel();
         labelUser = new javax.swing.JLabel();
         PanelHistorial = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         btnCerrarHistorial = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jLabel12 = new javax.swing.JLabel();
         PanelPreguntas = new javax.swing.JPanel();
         SubPanel = new javax.swing.JTabbedPane();
@@ -253,53 +253,59 @@ public class FormQuestions extends javax.swing.JFrame {
         PanelHistorial.setBackground(new java.awt.Color(0, 0, 0));
         PanelHistorial.setLayout(null);
 
-        tablaUserHistorial.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tablaUserHistorial.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        tablaUserHistorial.setEditingColumn(0);
-        tablaUserHistorial.setEditingRow(0);
-        tablaUserHistorial.setEnabled(false);
-        tablaUserHistorial.setRequestFocusEnabled(false);
-        jScrollPane1.setViewportView(tablaUserHistorial);
-        tablaUserHistorial.getAccessibleContext().setAccessibleName("");
-        tablaUserHistorial.getAccessibleContext().setAccessibleDescription("");
-
-        PanelHistorial.add(jScrollPane1);
-        jScrollPane1.setBounds(60, 60, 452, 151);
-
+        btnCerrarHistorial.setBackground(new java.awt.Color(0, 0, 0));
         btnCerrarHistorial.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnCerrarHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close.png"))); // NOI18N
+        btnCerrarHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/blue_exit_delete_delete_12417.png"))); // NOI18N
         btnCerrarHistorial.setBorder(null);
         btnCerrarHistorial.setBorderPainted(false);
         btnCerrarHistorial.setFocusPainted(false);
+        btnCerrarHistorial.setOpaque(true);
         btnCerrarHistorial.setRequestFocusEnabled(false);
         PanelHistorial.add(btnCerrarHistorial);
-        btnCerrarHistorial.setBounds(530, 0, 40, 40);
+        btnCerrarHistorial.setBounds(40, 40, 50, 50);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("HISTORIAL USUARIO");
         PanelHistorial.add(jLabel9);
-        jLabel9.setBounds(0, 0, 570, 60);
+        jLabel9.setBounds(0, 0, 770, 80);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/notas.png"))); // NOI18N
         PanelHistorial.add(jLabel10);
-        jLabel10.setBounds(350, 10, 110, 40);
+        jLabel10.setBounds(490, 10, 100, 60);
+
+        tablaUserHistorial.setBackground(new java.awt.Color(255, 255, 255));
+        tablaUserHistorial.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tablaUserHistorial.setForeground(new java.awt.Color(0, 0, 0));
+        tablaUserHistorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaUserHistorial.setFocusable(false);
+        tablaUserHistorial.setSelectionBackground(new java.awt.Color(0, 153, 255));
+        tablaUserHistorial.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tablaUserHistorial.getTableHeader().setResizingAllowed(false);
+        tablaUserHistorial.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tablaUserHistorial);
+
+        PanelHistorial.add(jScrollPane2);
+        jScrollPane2.setBounds(40, 110, 690, 380);
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/voltis.jpg"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/his.jpg"))); // NOI18N
         PanelHistorial.add(jLabel12);
-        jLabel12.setBounds(0, 0, 570, 270);
+        jLabel12.setBounds(0, 0, 770, 620);
 
-        getContentPane().add(PanelHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 570, 270));
+        getContentPane().add(PanelHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 770, 620));
 
         PanelPreguntas.setBackground(new java.awt.Color(184, 207, 229));
         PanelPreguntas.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -587,7 +593,7 @@ public class FormQuestions extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JLabel labelUser;
     public static javax.swing.JLabel numeroPregunta;
     public static javax.swing.JRadioButton respuesta1;

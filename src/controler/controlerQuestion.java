@@ -1,4 +1,5 @@
 package controler;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import model.Capitulo;
 import model.Historial;
 import model.Pregunta;
@@ -86,32 +88,36 @@ public class controlerQuestion  extends MouseAdapter implements ActionListener {
         JOptionPane.showMessageDialog(null, mensaje);
     }
     public void listarHistorial() {
-        DefaultTableModel userHistory = new DefaultTableModel();
-        userHistory.addColumn("Capitulo");
-        userHistory.addColumn("Nº Aciertos");
-        userHistory.addColumn("Nº Desaciertos");
-        userHistory.addColumn("Nota");
-        userHistory.addColumn("Fecha");
+        String[] encab = {"Capítulo", "Nº Aciertos", "Nº Desaciertos", "Nota", "Fecha"};
+        DefaultTableModel userHistory = new DefaultTableModel(null, encab) {
+            @Override
+            public boolean isCellEditable(int i, int j) {
+                return false;
+            }
+        };
+        JTableHeader tableheader = question.tablaUserHistorial.getTableHeader();
+        tableheader.setBackground(new Color(18,20,35));
+        tableheader.setForeground(Color.white);
         question.tablaUserHistorial.setModel(userHistory);
         String[] datos = new String[5];
         String userHistorial = FormLogin.txtusername.getText();
         historial = new Historial();
         try {
-            if (historial != null){
+            if (historial != null) {
                 for (int j = 0; j < historial.listarHistorialUsuario(userHistorial).size(); j++) {
-                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");                    
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
                     datos[0] = historial.listarHistorialUsuario(userHistorial).get(j).getCapitulo();
                     datos[1] = String.valueOf(historial.listarHistorialUsuario(userHistorial).get(j).getRespuesta_correcta());
                     datos[2] = String.valueOf(historial.listarHistorialUsuario(userHistorial).get(j).getRespuesta_incorrecta());
                     datos[3] = String.valueOf(historial.listarHistorialUsuario(userHistorial).get(j).getNota());
                     datos[4] = formatoFecha.format(historial.listarHistorialUsuario(userHistorial).get(j).getFecha());
-                    userHistory.addRow(datos);                    
+                    userHistory.addRow(datos);
                 }
             }
             question.tablaUserHistorial.setModel(userHistory);
         } catch (Exception c) {
             message("error" + c);
-        }        
+        }
     }
     public void respuestaCorrecta() {
         buena++;
