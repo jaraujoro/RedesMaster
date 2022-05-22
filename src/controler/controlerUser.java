@@ -76,11 +76,11 @@ public class controlerUser extends MouseAdapter implements ActionListener {
                     user = user.verificarUsuario(username);
                     if (user != null) {
                         if (desencriptionPassword(password, user.getPassword())) {
-                            message("Bienvenido: " + user.getNombre() + " " + user.getApellido());
+                           //message("Bienvenido: " + user.getNombre() + " " + user.getApellido());
                             login.setVisible(false);
                             question.setVisible(true);
                             controlerQuiestion = new controlerQuestion(question, login);
-                            FormQuestions.labelUser.setText("Usuario: " + user.getNombre() + " " + user.getApellido());
+                            FormQuestions.labelUser.setText(user.getNombre() + " " + user.getApellido());
                         } else {
                             message(" verifique su contraseña");
                             FormLogin.txtpassword.requestFocus();

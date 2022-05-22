@@ -1,13 +1,21 @@
 package controler;
 
+import Utilidades.ColoresCeldasInter;
+import Utilidades.PlantillaPDF;
 import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -42,8 +50,8 @@ public class controlerQuestion extends MouseAdapter implements ActionListener {
     int mala = 0;
     int notaEstudiante = 0;
     int insertarHistorial = 0;
+    String historialDelUsuario = FormLogin.txtusername.getText();
     Date fecha;
-
     public controlerQuestion(FormQuestions question, FormLogin login) throws Exception {
         this.question = question;
         this.login = login;
@@ -72,6 +80,8 @@ public class controlerQuestion extends MouseAdapter implements ActionListener {
         FormQuestions.btnAleatorio.addActionListener(this);
         FormQuestions.btnSalir.addActionListener(this);
         FormQuestions.btnCerrarHistorial.addActionListener(this);
+        FormQuestions.btnGenerarPDF.addActionListener(this);
+        FormQuestions.btnAbrirPDF.addActionListener(this);
         question.PanelMenu.setVisible(false);
         question.PanelPreguntas.setVisible(false);
         question.PanelBotonesIndice.setOpaque(false);
@@ -223,8 +233,8 @@ public class controlerQuestion extends MouseAdapter implements ActionListener {
             if (res != null) {
                 cap = res.getPregunta().getCapitulo();
                 FormQuestions.numeroPregunta.setText("Pregunta: " + pregunta);
-                FormQuestions.tituloCap.setText("<html>" + res.getPregunta().getCapitulo().getCapitulo() + "<html>");
-                FormQuestions.Pregunta.setText("<html>" + res.getPregunta().getPregunta().toUpperCase()+ "<html>");
+                FormQuestions.tituloCap.setText("<html>"+res.getPregunta().getCapitulo().getCapitulo() + "<html>");
+                FormQuestions.Pregunta.setText("<html>"+res.getPregunta().getPregunta().toUpperCase()+ "<html>");
                 FormQuestions.respuesta1.setText("<html>"+res.getRespuesta1()+"<html>");
                 FormQuestions.respuesta2.setText("<html>"+res.getRespuesta2()+"<html>");
                 FormQuestions.respuesta3.setText("<html>"+res.getRespuesta3()+"<html>");
@@ -241,13 +251,41 @@ public class controlerQuestion extends MouseAdapter implements ActionListener {
     //event's buttom's
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (FormQuestions.btnGenerarPDF == e.getSource()) {
+            List<Historial> Personas = null;
+            PlantillaPDF plantilla= new PlantillaPDF();
+            try {
+                Personas = historial.listarHistorialUsuario(historialDelUsuario);
+                plantilla = new PlantillaPDF(historialDelUsuario, Personas);
+                plantilla.crearPDF();
+                JOptionPane.showMessageDialog(null,"Archivo Creado Correctamente");
+                question.btnAbrirPDF.setEnabled(true);
+                question.btnGenerarPDF.setEnabled(false);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        if (FormQuestions.btnAbrirPDF == e.getSource()) {
+            try {
+                File path = new File(historialDelUsuario+".pdf");
+                Desktop.getDesktop().open(path);
+                question.btnAbrirPDF.setEnabled(false);
+                question.btnGenerarPDF.setEnabled(true);
+            } catch (Exception x) {
+                System.out.println(x.getMessage());
+            }
+        }
         if(FormQuestions.btnSalir==e.getSource()){
-            System.exit(0);
+            int salida=JOptionPane.showConfirmDialog(null,"¿Desea salir de la Aplicación?"
+                    ,"Seleciona una Opción...",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+            System.out.println(salida);
+            if(salida==0){
+                System.exit(0);
+            }
         }
         if(FormQuestions.btnHistorial==e.getSource()){
             question.PanelHistorial.setVisible(true);
             question.PanelBotonesIndice.setVisible(false);
-            //userhistorial = question.labelUser.getText();
             question.PanelMenu.setVisible(false);
             windowX = 0;
             windowY = 220;
@@ -596,7 +634,7 @@ public class controlerQuestion extends MouseAdapter implements ActionListener {
                    String usuario=FormLogin.txtusername.getText();
                    String capitule = capitulo;
                    int nota= buena*2;
-                   fecha = fecha = Date.valueOf(LocalDate.now()); 
+                   fecha = Date.valueOf(LocalDate.now()); 
                     try {
                         historial = new Historial(usuario, capitule, rescorrect, resincorrect, nota, fecha);
                         int x = historial.registrarHistorialUsuario();
